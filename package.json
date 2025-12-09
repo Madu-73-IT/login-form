@@ -23,6 +23,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.75"
+    "@iconify-json/lucide": "^1.2.78",
+    "baseline-browser-mapping": "^2.9.2"
   }
 }

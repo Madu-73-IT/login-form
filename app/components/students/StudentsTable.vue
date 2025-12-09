@@ -18,7 +18,7 @@
 
 <script setup>
 const { data: students } = await useAsyncData("students", () =>
-  $fetch("api/Students")
+  $fetch("/api/Students")
 );
 
 const columns = [

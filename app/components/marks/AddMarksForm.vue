@@ -63,13 +63,13 @@ const students = ref([]);
 const subjects = ref([]);
 
 onMounted(async () => {
-  students.value = await $fetch("api/Students");
-  subjects.value = await $fetch("api/Subjects");
+  students.value = await $fetch("/api/Students");
+  subjects.value = await $fetch("/api/Subjects");
 });
 
 const onSubmit = async () => {
   try {
-    await $fetch("api/Marks", {
+    await $fetch("/api/Marks", {
       method: "POST",
       body: form,
     });

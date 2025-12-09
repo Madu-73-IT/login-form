@@ -22,7 +22,7 @@
           <label class="block font-medium mb-1">Classroom</label>
 
           <select
-            v-model="form.classroom"
+            v-model="form.classRoom"
             class="w-full px-4 py-2 border border-gray-300 rounded-xl"
           >
             <option value="" disabled>Select Classroom</option>
@@ -50,11 +50,10 @@
 </template>
 
 <script setup>
-const runtime = useRuntimeConfig();
 const form = reactive({
   name: "",
   email: "",
-  classroom: "",
+  classRoom: "",
 });
 const classroomOptions = [
   { label: "Grade 10A", value: "Grade 10A" },
@@ -63,7 +62,7 @@ const classroomOptions = [
 
 const onSubmit = async () => {
   try {
-    await $fetch("api/Students", {
+    await $fetch("/api/Students", {
       method: "POST",
       body: form,
     });

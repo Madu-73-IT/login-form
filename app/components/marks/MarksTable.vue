@@ -3,30 +3,19 @@
     <div class="flex justify-between items-center mb-4">
       <h1 class="text-2xl font-bold">Marks List</h1>
 
-      <UButton to="/marks/add" color="primary">
-        Add Marks +
-      </UButton>
+      <UButton to="/marks/add" color="primary"> Add Marks + </UButton>
     </div>
 
     <UTable :rows="rows" :columns="columns" />
-
- </UCard>
+  </UCard>
 </template>
 
 <script setup>
-
-
-
-
 const columns = [
-  { key: "id", label: "ID",id: 'id' },
-  { key: "name", label: "Student",id: 'student' },
-  { key: "gpa", label: "GPA",id: 'gpa' },
-  { key: "subjects", label: "Subjects",id: 'subjects' },
- 
+  { key: "id", label: "ID", id: "id" },
+  { key: "name", label: "Student", id: "student" },
+  { key: "currentGPA", label: "GPA", id: "currentGPA" },
+  { key: "subjects", label: "Subjects", id: "subjects" },
 ];
-const { data: rows } = await useFetch("api/Marks")
+const { data: rows } = await useFetch("/api/Marks");
 </script>
-
-
-
