@@ -1,32 +1,88 @@
 <template>
-  <UCard class="p-6">
-    <div class="flex justify-between items-center mb-4">
-      <h1 class="text-2xl font-bold">Students</h1>
+  <table class="min-w-full">
+    <thead class="bg-gray-50">
+      <tr>
+        <th
+          class="px-6 py-3 text-left text-sm font-medium text-gray-800 uppercase bg-gray-100"
+        >
+          ID
+        </th>
+        <th
+          class="px-6 py-3 text-left text-sm font-medium text-gray-800 uppercase bg-gray-100"
+        >
+          Name
+        </th>
+        <th
+          class="px-6 py-3 text-left text-sm font-medium text-gray-800 uppercase bg-gray-100"
+        >
+          Email
+        </th>
+        <th
+          class="px-6 py-3 text-left text-sm font-medium text-gray-800 uppercase bg-gray-100"
+        >
+          GPA
+        </th>
+        <th
+          class="px-6 py-3 text-left text-sm font-medium text-gray-800 uppercase bg-gray-100"
+        >
+          Grade
+        </th>
+        <th
+          class="px-6 py-3 text-left text-sm font-medium text-gray-800 uppercase bg-gray-100"
+        >
+          Actions
+        </th>
+      </tr>
+    </thead>
 
-      <UButton color="primary" to="/students/add"> Add Student + </UButton>
-    </div>
-
-    <UTable :rows="students" :columns="columns">
-      <template #actions="{ row }">
-        <UButton size="xs" color="gray" :to="`/students/view?id=${row.id}`">
-          View
-        </UButton>
-      </template>
-    </UTable>
-  </UCard>
+    <tbody class="bg-white">
+      <tr
+        v-for="student in students"
+        :key="student.id"
+        class="hover:bg-gray-50"
+      >
+        <td class="px-6 py-4 text-sm text-gray-700">
+          {{ student.id }}
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-700">
+          {{ student.name }}
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-700">
+          {{ student.email }}
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-700">
+          {{
+            typeof student.currentGPA === "number"
+              ? student.currentGPA.toFixed(2)
+              : "0.00"
+          }}
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-700">
+          {{ student.grade }}
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-700">
+          <router-link
+            :to="`/students/${student.id}`"
+            class="text-blue-600 hover:text-blue-800 font-medium"
+          >
+            View
+          </router-link>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
-<script setup>
-const { data: students } = await useAsyncData("students", () =>
+<script setup lang="ts">
+interface Student {
+  id: number;
+  name: string;
+  email: string;
+  currentGPA: number;
+  grade: string;
+}
+
+const { data: students } = await useAsyncData<Student[]>("students", () =>
   $fetch("/api/Students")
 );
-
-const columns = [
-  { id: "id", key: "id", label: "ID" },
-  { id: "name", key: "name", label: "Name" },
-  { id: "email", key: "email", label: "Email" },
-  { id: "currentGPA", key: "currentGPA", label: "GPA" },
-  { id: "grade", key: "grade", label: "Grade" },
-  { id: "actions", key: "actions", label: "Actions" },
-];
 </script>

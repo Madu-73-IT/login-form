@@ -3,7 +3,7 @@
     <Navbar />
     <div class="h-full w-full grid grid-cols-4">
       <Sidebar />
-      <div class="col-span-3 h-full bg-white">
+      <div class="col-span-3 h-full bg-blue-200">
         <slot />
       </div>
     </div>

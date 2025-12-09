@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full bg-gray-500">
+  <div class="h-full bg-blue-500">
     <UNavigationMenu
       orientation="vertical"
       :items="items"
@@ -29,7 +29,7 @@ const items = ref<NavigationMenuItem[]>([
       type: "link",
       to: "/students",
     },
-      {
+    {
       label: "Marks",
       icon: "i-lucide-calculator",
       type: "link",
