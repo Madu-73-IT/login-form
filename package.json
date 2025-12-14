@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.78",
+    "@nuxt/icon": "^2.1.1",
     "baseline-browser-mapping": "^2.9.2"
   }
 }

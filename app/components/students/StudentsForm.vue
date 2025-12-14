@@ -8,7 +8,7 @@
       </h2>
     </template>
 
-    <UForm :state="form" :submit="onSubmit" class="space-y-5">
+    <UForm :state="form" @submit.prevent="onSubmit" class="space-y-5">
       <div>
         <label class="block font-medium mb-1 text-gray-700">Full Name</label>
         <UInput v-model="form.name" type="text" class="w-full" required />

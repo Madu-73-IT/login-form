@@ -1,23 +1,32 @@
 <template>
   <div class="p-6 space-y-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-red-400 shadow rounded-xl p-6">
-        <p class="text-gray-500 text-sm">Total Students</p>
-        <p class="text-3xl font-bold mt-2">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <UCard class="bg-green-500">
+        <UIcon name="i-lucide-users" />
+        <template #header>
+          <p class="text-white text-xl text-center">Total Students</p>
+        </template>
+
+        <p class="text-3xl font-semibold mt-2">
           {{ stats?.totalStudents ?? "-" }}
         </p>
-      </div>
+      </UCard>
 
-      <div class="bg-green-400 shadow rounded-xl p-6">
-        <p class="text-gray-500 text-sm">Average GPA</p>
-        <p class="text-3xl font-bold mt-2">
+      <UCard class="bg-yellow-300">
+        <UIcon name="i-lucide-activity" />
+        <template #header>
+          <p class="text-white text-center text-xl">Average GPA</p>
+        </template>
+        <p class="text-3xl font-semibold mt-2">
           {{ stats?.averageGPA ?? "-" }}
         </p>
-      </div>
+      </UCard>
     </div>
-
     <div v-if="pending" class="text-gray-500">Loading dashboard data...</div>
-    <div v-if="error" class="text-red-500">Failed to load dashboard data</div>
+
+    <div v-if="error" class="text-red-600">
+      Error loading data: {{ error.message }}
+    </div>
   </div>
 </template>
 
@@ -25,15 +34,19 @@
 definePageMeta({
   middleware: ["auth"],
 });
+
 const token = useCookie("token");
+
 const {
   data: stats,
   pending,
   error,
-} = await useFetch("/api/dashboard/stats", {
+} = await useFetch("/api/Dashboard/stats", {
   headers: {
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${token.value}`,
   },
+
+  watch: [token],
 });
 
 onMounted(() => {

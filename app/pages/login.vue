@@ -15,6 +15,7 @@
               v-model="data.email"
               icon="i-lucide-mail"
               name="email"
+              placeholder="email"
               class="w-full"
               type="email"
             />
@@ -25,6 +26,7 @@
               v-model="data.password"
               icon="i-lucide-lock"
               name="password"
+              placeholder="password"
               type="password"
             />
           </UFormField>
@@ -52,7 +54,7 @@
 
 <script setup>
 const token = useCookie("token");
-
+const user = useCookie("user");
 definePageMeta({
   layout: false,
 });
@@ -75,7 +77,9 @@ const Login = async () => {
     });
 
     token.value = res.token;
-
+    if (res.user && res.user.email) {
+      user.value = JSON.stringify(res.user);
+    }
     toast.add({
       title: "Login Successful",
       color: "success",
