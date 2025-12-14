@@ -20,6 +20,10 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script setup>
+definePageMeta({
+  middleware: ["auth"],
+});
+</script>
 
 <style></style>

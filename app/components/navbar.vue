@@ -6,7 +6,7 @@
 
     <div class="flex items-center">
       <UIcon name="i-lucide-user" class="w-6 h-6" />
-      <p class="text-black ml-2 mr-2">{{ userStore.user.email }}</p>
+      <p class="text-black ml-2 mr-2">{{ userStore.email }}</p>
     </div>
   </nav>
 </template>

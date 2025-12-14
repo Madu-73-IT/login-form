@@ -1,8 +1,6 @@
 <template>
   <div class="p-6 flex justify-center">
-    <UCard
-      class="w-full max-w-2xl shadow-lg border border-gray-200 rounded-2xl bg-white"
-    >
+    <UCard class="w-full max-w-2xl border border-gray-200 rounded-2xl bg-white">
       <template #header>
         <h1 class="text-2xl font-bold text-gray-800">Student Details</h1>
       </template>
@@ -39,19 +37,17 @@
           </span>
         </div>
       </div>
-
-      <div class="mt-6 flex justify-end">
-        <UButton color="secondary" @click="$router.push('/students')">
-          Back to Students
-        </UButton>
-      </div>
     </UCard>
   </div>
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: ["auth"],
+});
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+const token = useCookie("token");
 
 interface Student {
   id: number;
@@ -74,9 +70,13 @@ const student = ref<Student>({
 
 onMounted(async () => {
   try {
-    student.value = await $fetch<Student>(`/api/Students/${studentId}`);
+    student.value = await $fetch<Student>(`/api/Students/${studentId}`, {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    });
   } catch (err) {
-    console.error("Failed to fetch student:", err);
+    console.error("Failed :", err);
   }
 });
 </script>

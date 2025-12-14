@@ -3,10 +3,12 @@
     class="w-full max-w-xl shadow-lg border border-gray-200 rounded-2xl bg-white"
   >
     <template #header>
-      <h2 class="text-2xl font-semibold text-gray-800">Add Student</h2>
+      <h2 class="text-2xl font-semibold text-gray-800 text-center">
+        Add Student
+      </h2>
     </template>
 
-    <UForm :state="form" @submit="onSubmit" class="space-y-5">
+    <UForm :state="form" :submit="onSubmit" class="space-y-5">
       <div>
         <label class="block font-medium mb-1 text-gray-700">Full Name</label>
         <UInput v-model="form.name" type="text" class="w-full" required />
@@ -44,7 +46,7 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import { navigateTo } from "#app";
-
+const token = useCookie("token");
 const form = reactive({
   name: "",
   email: "",
@@ -73,6 +75,7 @@ const onSubmit = async () => {
       body: studentDTO,
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token.value}`,
       },
     });
 

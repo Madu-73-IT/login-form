@@ -3,7 +3,9 @@
     class="w-full max-w-xl shadow-lg border border-gray-200 rounded-2xl bg-white"
   >
     <template #header>
-      <h2 class="text-2xl font-semibold text-gray-800">Add Marks</h2>
+      <h2 class="text-2xl font-semibold text-gray-800 text-center">
+        Add Marks
+      </h2>
     </template>
 
     <UForm :state="form" @submit="onSubmit" class="space-y-5">
@@ -49,6 +51,7 @@
 </template>
 
 <script setup>
+const token = useCookie("token");
 const form = reactive({
   studentId: "",
   subjectId: "",
@@ -68,6 +71,10 @@ const onSubmit = async () => {
     await $fetch("/api/Marks", {
       method: "POST",
       body: form,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token.value}`,
+      },
     });
 
     navigateTo("/marks");

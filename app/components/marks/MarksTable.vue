@@ -74,8 +74,12 @@ interface Mark {
   currentGPA: number;
   subjects: string;
 }
-
+const token = useCookie("token");
 const { data: students } = await useAsyncData<Mark[]>("marks", () =>
-  $fetch("/api/Marks/report")
+  $fetch("/api/Marks/report", {
+    headers: {
+      Authorization: `Bearer ${token.value}`,
+    },
+  })
 );
 </script>

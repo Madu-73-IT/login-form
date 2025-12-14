@@ -81,8 +81,12 @@ interface Student {
   currentGPA: number;
   grade: string;
 }
-
+const token = useCookie("token");
 const { data: students } = await useAsyncData<Student[]>("students", () =>
-  $fetch("/api/Students")
+  $fetch("/api/Students", {
+    headers: {
+      Authorization: `Bearer ${token.value}`,
+    },
+  })
 );
 </script>

@@ -1,42 +1,58 @@
 <template>
-  <div class="flex items-center justify-center bg-gray-600 min-h-screen">
-    <UCard class="bg-blue-500 min-w-100 max-w-100">
-      <template #header>
-        <p class="text-2xl text-center font-semibold text-black">
-          SIGN INTO YOUR ACCOUNT
-        </p>
-      </template>
+  <div class="grid grid-cols-2">
+    <div class="col-span-1 bg-[url(/img/login.avif)]"></div>
+    <div class="flex items-center justify-center bg-sky-100 h-screen">
+      <UCard class="bg-white p-8 rounded-lg shadow-lg">
+        <template #header>
+          <p class="text-2xl text-center font-semibold text-black">
+            SIGN INTO YOUR ACCOUNT
+          </p>
+        </template>
 
-      <UForm class="space-y-4 justify-items-center">
-        <UFormField label="" name="email">
-          <UInput
-            v-model="data.email"
-            icon="i-lucide-mail"
-            name="email"
-            type="email"
-          />
-        </UFormField>
+        <UForm class="space-y-4 justify-items-center">
+          <UFormField label="" name="email">
+            <UInput
+              v-model="data.email"
+              icon="i-lucide-mail"
+              name="email"
+              class="w-full"
+              type="email"
+            />
+          </UFormField>
 
-        <UFormField label="" name="password">
-          <UInput
-            v-model="data.password"
-            icon="i-lucide-lock"
-            name="password"
-            type="password"
-          />
-        </UFormField>
+          <UFormField label="" name="password">
+            <UInput
+              v-model="data.password"
+              icon="i-lucide-lock"
+              name="password"
+              type="password"
+            />
+          </UFormField>
 
-        <div class="flex justify-center">
-          <UButton @click="Login" class="justify-items-center" type="submit">
-            SIGN IN
-          </UButton>
-        </div>
-      </UForm>
-    </UCard>
+          <div class="flex justify-center">
+            <UButton
+              @click="Login"
+              class="justify-items-center bg-blue-500"
+              type="submit"
+            >
+              SIGN IN
+            </UButton>
+          </div>
+          <p class="text-center mt-4 text-sm">
+            Don't have an account?
+            <NuxtLink to="/account" class="text-blue-600 font-semibold"
+              >Sign up</NuxtLink
+            >
+          </p>
+        </UForm>
+      </UCard>
+    </div>
   </div>
 </template>
 
 <script setup>
+const token = useCookie("token");
+
 definePageMeta({
   layout: false,
 });
@@ -49,29 +65,27 @@ const data = ref({
 });
 
 const Login = async () => {
-  console.log("login start");
-
   try {
-    await $fetch("api/login", {
+    const res = await $fetch("/api/Auth/Login", {
       method: "POST",
       body: data.value,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
+    token.value = res.token;
+
     toast.add({
-      title: "login successfull",
-      description: "login successfull.",
+      title: "Login Successful",
       color: "success",
     });
-    navigateTo("/dashboard");
+
+    await navigateTo("/dashboard");
   } catch (error) {
-    console.log("Login failed");
-    console.log("error", error.data);
-
-    //alert(error.data.statusMessage);
     toast.add({
-      title: "login faild.",
-      description: "error.",
-
+      title: "Login Failed",
+      description: error?.data?.message || "Invalid credentials",
       color: "error",
     });
   }
