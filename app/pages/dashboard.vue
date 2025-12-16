@@ -2,9 +2,9 @@
   <div class="p-6 space-y-6">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <UCard class="bg-green-500">
-        <UIcon name="i-lucide-users" />
         <template #header>
-          <p class="text-white text-xl text-center">Total Students</p>
+          <p class="text-white text-xl gap-4">Total Students</p>
+          <UIcon name="i-lucide-users" />
         </template>
 
         <p class="text-3xl font-semibold mt-2">
@@ -13,9 +13,9 @@
       </UCard>
 
       <UCard class="bg-yellow-300">
-        <UIcon name="i-lucide-activity" />
         <template #header>
-          <p class="text-white text-center text-xl">Average GPA</p>
+          <p class="text-white text-xl">Average GPA</p>
+          <UIcon name="i-lucide-activity" />
         </template>
         <p class="text-3xl font-semibold mt-2">
           {{ stats?.averageGPA ?? "-" }}

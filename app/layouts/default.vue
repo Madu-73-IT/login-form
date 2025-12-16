@@ -12,6 +12,9 @@
 <script setup>
 import Navbar from "~/components/navbar.vue";
 import Sidebar from "~/components/sidebar.vue";
+import { useAuthStore } from "~/stores/auth";
+const authStore = useAuthStore();
+authStore.loadFromCookies();
 </script>
 
 <style scoped></style>

@@ -53,8 +53,10 @@
 </template>
 
 <script setup>
+import { useAuthStore } from "~/stores/auth";
 const token = useCookie("token");
 const user = useCookie("user");
+const authStore = useAuthStore();
 definePageMeta({
   layout: false,
 });
@@ -75,8 +77,8 @@ const Login = async () => {
         "Content-Type": "application/json",
       },
     });
+    authStore.setToken(res.token);
 
-    token.value = res.token;
     if (res.user && res.user.email) {
       user.value = JSON.stringify(res.user);
     }
